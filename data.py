@@ -22,17 +22,15 @@ for loc in points:
     poi = amadeus.reference_data.locations.points_of_interest.by_square.get(
         north=loc[0], west=loc[1], south=loc[2], east=loc[3])
     for place in poi.data:
+        # print(place)
         for tag in place['tags']:
-            if tag in complete_tag:
+            # print(tag)
+            if tag in dict:
+                dict[tag] += 1
                 complete_tag[tag] += 1
             else:
-                complete_tag[tag] = 1
-    for place in poi.data:
-        for tag in place['tags']:
-            if tag in tags:
-                dict[tag] += 1
-            else:
                 dict[tag] = 1
+                complete_tag[tag] = 1
     tags.append(dict)
 # for i in range(0, len(tags)):
 #     print(tags[i])
