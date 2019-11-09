@@ -14,7 +14,7 @@ with open('csv/tags.csv') as tagsfile:
     keys = first_line.split(',')
 
 
-personality = ['Touristy', 'Shopaholic', 'Outdoor', 'Sport', 'Foodie', 'Chill/Fun']
+personalityType = ['Touristy', 'Shopaholic', 'Outdoor', 'Foodie', 'Chill/Fun', 'Everything']
 personalityTags = []
 
 
@@ -23,18 +23,22 @@ with open('csv/personality.csv') as persfile:
     for row in csv_reader:
         personalityTags.append(row)
 
-
+personality = dict(zip(personalityType, personalityTags))
 placesCounter = []
+
+personalityType = ['Touristy', 'Outdoor']
 
 for dict in tags:
     counter = 0
     for key in dict:
-        for persona in personalityTags:
-            for attribute in persona:
+        for pT in personalityType:
+            for attribute in personality[pT]:
                 if key.strip() == attribute.strip():
                     counter += int(dict[key])
-                    # print(dict[key])
+                # print(dict[key])
     placesCounter.append(counter)
 
-# print(tags[0])
-print(placesCounter)
+result = list(zip(location, placesCounter))
+result = sorted(result, key=lambda x: x[1], reverse=True)
+
+print(result)
